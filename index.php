@@ -51,7 +51,7 @@
 <div id="loginModal" class="modal fade">
     <div class="modal-dialog modal-login">
         <div class="modal-content">
-            <form action="methods2.php" method="post">
+            <form action="login.php" method="post">
                 <div class="modal-header">
                     <h4 class="modal-title">Login</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -84,7 +84,7 @@
 <div id="signupModal" class="modal fade">
     <div class="modal-dialog modal-login">
         <div class="modal-content">
-            <form action="methods.php" method="post">
+            <form action="register.php" method="post">
                 <div class="modal-header">
                     <h4 class="modal-title">Sign Up</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -104,25 +104,30 @@
                     </div>
                     <div class="form-group">
                         <label>Telephone Number</label>
-                        <input type="text" class="form-control" required="required" name="telnum">
+                        <input type="number" class="form-control" required="required" name="telnum">
                     </div>
                     <div class="form-group">
                         <label>SSN</label>
-                        <input type="text" class="form-control" required="required" name="ssn">
+                        <input type="number" class="form-control" required="required" name="ssn">
                     </div>
 
                     <div class="form-group">
                         <div class="clearfix">
                             <label>Password</label>
-                            <a href="#" class="float-right text-muted"><small>Forgot?</small></a>
+                            <input type="password" class="form-control" required="required" name="pswd">
                         </div>
 
-                        <input type="password" class="form-control" required="required" name="pswd">
+                        <div class="clearfix">
+                            <label>Confirm Password</label>
+                            <input type="password" class="form-control" required="required" name="confirm_pswd">
+                        </div>
+
+
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <label class="form-check-label"><input type="checkbox"> Remember me</label>
-                    <input type="submit" class="btn btn-primary" value="Login">
+
+                    <input type="submit" class="btn btn-primary" value="Signup">
                 </div>
             </form>
         </div>
