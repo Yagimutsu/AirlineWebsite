@@ -2,6 +2,8 @@
 
 require_once "config.php";
 
+session_start();
+
 $time1 = " 00:00:00";
 $time2 = " 23:59:59";
 
@@ -71,25 +73,45 @@ $query_flights = mysqli_query($link, "SELECT * FROM flight WHERE Departure=('$de
         <th data-field="country">Destination</th>
         <th data-field="city">Departure Time</th>
         <th data-field="city">Capacity</th>
+        <th data-field="city">Price</th>
         <th data-field="actions" data-formatter="operateFormatter" data-events="operateEvents"></th>
         </thead>
         <tbody>
 
-        <?php
-        $count = 1;
-        foreach($query_flights as $row){
-            echo '<tr>';
-            echo '<td>' . $count . '</td>';
-            echo '<td>' . $row["Company"] . '</td>';
-            echo '<td>' . $departure_name . '</td>';
-            echo '<td>' . $destination_name . '</td>';
-            echo '<td>' . $row["Departure_Time"] . '</td>';
-            echo '<td>' . $row["Capacity"] . '</td>';
-            echo '<td><button class="btn btn-warning">SATIN AL</button></td>';
-            echo '</tr>';
-            $count = $count + 1;
-        }
-        ?>
+        <form>
+
+            <?php
+            $count = 1;
+            foreach($query_flights as $row){
+                echo '<tr>';
+                echo '<td>' . $count . '</td>';
+                echo '<td>' . $row["Company"] . '</td>';
+                echo '<td>' . $departure_name . '</td>';
+                echo '<td>' . $destination_name . '</td>';
+                echo '<td>' . $row["Departure_Time"] . '</td>';
+                echo '<td>' . $row["Capacity"] . '</td>';
+
+                if($class == "Economy") {
+                    $price = rand(39.99,69.99);
+                    echo '<td>' . $price . "TL" . '</td>';
+                }
+                elseif ($class == "Business") {
+                    $price = rand(69.99,129.99);
+                    echo '<td>' . $price . "TL" . '</td>';
+                }
+                else { //First Class
+                    $price = rand(129.99,259.99);
+                    echo '<td>' . $price . "TL" . '</td>';
+                }
+
+                echo '<td><button class="btn btn-warning">SATIN AL</button></td>';
+                echo '</tr>';
+                $count = $count + 1;
+            }
+            ?>
+
+        </form>
+
 
 
 

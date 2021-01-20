@@ -220,7 +220,7 @@ $query_from = mysqli_query($link, "SELECT * FROM airport");
                             <select class="form-control" name="class">
                                 <option value="Economy">Economy</option>
                                 <option value="Business">Business</option>
-                                <option value="Business">First Class</option>
+                                <option value="First Class">First Class</option>
                             </select>
                         </div>
                     </div>
