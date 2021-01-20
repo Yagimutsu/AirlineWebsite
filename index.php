@@ -1,3 +1,15 @@
+<?php
+require_once "config.php";
+session_start();
+
+
+
+$query_from = mysqli_query($link, "SELECT * FROM airport");
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,12 +48,35 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
+
+                <?php
+                if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+                    ?>
                 <li class="nav-item">
                     <a class="trigger-btn" data-toggle="modal" href="#signupModal">Sign Up</a>
                 </li>
                 <li class="nav-item">
                     <a class="trigger-btn" data-toggle="modal" href="#loginModal">Log In</a>
                 </li>
+
+                <?php
+                } else {?>
+
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <?php echo explode("@", $_SESSION["email"])[0];  ?>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a  class="dropdown-item" href="logout.php">Logout</a>
+                            </div>
+                        </div>
+
+                    </li>
+                <?php
+                }
+                ?>
+
             </ul>
         </div>
     </div>
@@ -59,7 +94,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Username</label>
-                        <input type="text" class="form-control" required="required" name="username">
+                        <input type="text" class="form-control" required="required" name="email">
                     </div>
                     <div class="form-group">
                         <div class="clearfix">
@@ -67,7 +102,7 @@
                             <a href="#" class="float-right text-muted"><small>Forgot?</small></a>
                         </div>
 
-                        <input type="password" class="form-control" required="required" name="password">
+                        <input type="password" class="form-control" required="required" name="pswd">
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
@@ -134,61 +169,68 @@
     </div>
 </div>
 
-<!-- GIDIS GELIS -->
+
 <header class="masthead text-center text-white">
     <div class="masthead-content">
         <div class="container">
             <h1 class="masthead-heading mb-0">CS306 Group34 Airlines</h1>
             <h2 class="masthead-subheading mb-0">Will Make You Fly!</h2>
-            <!-- YENI -->
+            <br>
+            <br>
+            <br>
             <div id="oneway">
-                <form role="form" action="SearchResultOneway.php" method="post">
+                <form role="form" action="SearchResult.php" method="post">
                     <div class="row">
                         <div class="col-sm-6">
                             <label for="from">From:</label>
-                            <input type="text" class="form-control" id="from" name="from" placeholder="City or Code" required>
+
+                            <select class="form-control" name="fromairport">
+                                <?php
+                                foreach($query_from as $row) {
+                                    ?>
+                                    <option  value="<?php echo $row["Name"]; ?>"><?php echo $row["Name"]; ?></option>
+                                <?php
+                                }
+                                ?>
+                            </select>
+
                         </div>
                         <div class="col-sm-6">
                             <label for="to">To:</label>
-                            <input type="text" class="form-control" id="to" name="to" placeholder="City or Code" required>
+                            <select class="form-control" name="toairport">
+                                <?php
+                                foreach($query_from as $row) {
+                                    ?>
+                                    <option value="<?php echo $row["Name"]; ?>"><?php echo $row["Name"]; ?></option>
+                                    <?php
+                                }
+                                ?>
+                            </select>
                         </div>
                     </div>
                     <hr >
                     <div class="row">
                         <div class="col-sm-6">
-                            <label for="depart">Depart:</label>
-                            <input type="date" class="form-control" id="depart" name="depart" required>
+                            <label for="depart">Date:</label>
+                            <input type="date" class="form-control" id="depart" name="date" required>
+
                         </div>
-                    </div>
-                    <div class="row">
-                        <hr >
                         <div class="col-sm-6">
                             <label for="class">Class:</label>
                             <select class="form-control" name="class">
                                 <option value="Economy">Economy</option>
                                 <option value="Business">Business</option>
+                                <option value="Business">First Class</option>
                             </select>
                         </div>
                     </div>
                     <br>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <label class="radio-inline">
-                                <input type="radio" name="stop" value="nonstop" checked>Non-Stop
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="stop" value="1stop">1 Stop
-                            </label>
-                        </div>
-                    </div>
                     <br>
-                    <div class="btn-group btn-group-justified">
+                    <div type="button" class="btn-group btn-group-justified">
                         <div class="btn-group">
                             <button type="submit" class="btn btn-success">Submit</button>
                         </div>
-                        <div class="btn-group">
-                            <button type="reset"  class="btn btn-info" value="Reset">Reset</button>
-                        </div>
+
                     </div>
                 </form>
             </div>
